@@ -17,7 +17,10 @@ class Class {
   // ...
 }
 
-module.exports = nonew(Class)
+var Class2 = nonew(Class)
+
+Class() // throws error
+Class2() // creates an instance of Class
 ```
 
 ## Rationale
