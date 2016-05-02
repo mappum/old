@@ -1,23 +1,21 @@
-# no-new
+# old
 
-[![npm version](https://img.shields.io/npm/v/no-new.svg)](https://www.npmjs.com/package/no-new)
+[![npm version](https://img.shields.io/npm/v/old.svg)](https://www.npmjs.com/package/old)
 
 **Make the 'new' keyword optional for ES6 classes**
 
-`no-new`
-
 ## Usage
 
-`npm install no-new`
+`npm install old`
 
 ```js
-var nonew = require('no-new')
+var old = require('old')
 
 class Class {
   // ...
 }
 
-var Class2 = nonew(Class)
+var Class2 = old(Class)
 
 Class() // throws error
 Class2() // creates an instance of Class
@@ -37,4 +35,5 @@ Recently, ES6 introduced classes to replace constructor functions. However, if t
 
 ## Credit
 
-Thank you to Sorella in ##javascript (Freenode) for the clean solution.
+- Thank you to Sorella in ##javascript (Freenode) for the clean solution
+- Thanks to slikts in ##javascript for the name idea
