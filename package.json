@@ -1,6 +1,6 @@
 {
   "name": "old",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Make the 'new' keyword optional for ES6 classes",
   "main": "index.js",
   "scripts": {
