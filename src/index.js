@@ -23,13 +23,37 @@ function defineStatics(WrapperClass, Class) {
   defineStatics(WrapperClass, Object.getPrototypeOf(Class))
 }
 
+
+function construct (Class, isConstructor, args) {
+  if (isConstructor) {
+    return new Class(...args)
+  } else {
+    const prototype = Class.prototype
+    if (prototype instanceof String ||
+      prototype instanceof Number ||
+      prototype instanceof Boolean) {
+      return new Class(...args).valueOf()
+    } else if (prototype instanceof Date) {
+      return new Class(...args).toString()
+    } else {
+      return new Class(...args)
+    }
+  }
+}
+
 function old (Class) {
   function WrapperClass (...args) {
-    return new Class(...args)
+    let isConstructor = false;
+    if (this instanceof WrapperClass && !this._constructed) {
+      isConstructor = true;
+      this._constructed = true;
+    }
+    return construct(Class, isConstructor, args)
   }
   assign(WrapperClass, Class)
   WrapperClass.prototype = assign({}, Class.prototype)
   WrapperClass.prototype[_super] = Class
+
   Object.defineProperty(WrapperClass, 'name', { value: Class.name })
 
   defineStatics(WrapperClass, Class)
