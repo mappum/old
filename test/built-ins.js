@@ -58,13 +58,6 @@ tap.test('Date without new', function (t) {
 })
 
 
-tap.test('Date getMilliseconds', function (t) {
-
-  t.equal()
-  t.end()
-})
-
-
 tap.test('Date with new', function (t) {
   const date = new Date()
   t.equal(typeof new OldDate(date), 'object')
