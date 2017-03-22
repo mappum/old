@@ -23,6 +23,7 @@ function defineStatics(WrapperClass, Class) {
   defineStatics(WrapperClass, Object.getPrototypeOf(Class))
 }
 
+
 function construct (Class, isConstructor, args) {
   if (isConstructor) {
     return new Class(...args)
@@ -52,6 +53,8 @@ function old (Class) {
   assign(WrapperClass, Class)
   WrapperClass.prototype = assign({}, Class.prototype)
   WrapperClass.prototype[_super] = Class
+
+  Object.defineProperty(WrapperClass, 'name', { value: Class.name })
 
   defineStatics(WrapperClass, Class)
 
