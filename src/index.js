@@ -11,6 +11,18 @@ function old (Class) {
   assign(WrapperClass, Class)
   WrapperClass.prototype = assign({}, Class.prototype)
   WrapperClass.prototype[_super] = Class
+
+  Object.getOwnPropertyNames(Class)
+    .map(prop => [prop, Object.getOwnPropertyDescriptor(Class, prop)])
+    .filter(([prop, descriptor]) => {
+      return typeof Class[prop] === 'function' ||
+             typeof descriptor.get === 'function' ||
+             typeof descriptor.set === 'function'
+    })
+    .forEach(([prop, descriptor]) => {
+      Object.defineProperty(WrapperClass, prop, descriptor);
+    });
+
   return WrapperClass
 }
 
