@@ -4,6 +4,8 @@ const assign = require('object-assign')
 
 const _super = Symbol('super')
 
+const builtIn = { String: String, Boolean: Boolean, Date: Date, Number: Number }
+
 function defineStatics(WrapperClass, Class) {
   if (!Class) return;
   Object.getOwnPropertyNames(Class)
@@ -27,12 +29,12 @@ function construct (Class, isConstructor, args) {
   if (isConstructor) {
     return new Class(...args)
   } else {
-    const prototype = Class.prototype
-    if (prototype instanceof String ||
-      prototype instanceof Number ||
-      prototype instanceof Boolean) {
+    const prototype = new Class()
+    if (prototype instanceof builtIn.String ||
+      prototype instanceof builtIn.Number ||
+      prototype instanceof builtIn.Boolean) {
       return new Class(...args).valueOf()
-    } else if (prototype instanceof Date) {
+    } else if (prototype instanceof builtIn.Date) {
       return new Class(...args).toString()
     } else {
       return new Class(...args)
