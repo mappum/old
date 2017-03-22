@@ -1,8 +1,11 @@
 'use strict'
-
 const assign = require('object-assign')
 
 const _super = Symbol('super')
+
+
+const builtIn = { String, Boolean, Date, Number }
+
 
 function defineStatics(WrapperClass, Class) {
   if (!Class) return;
@@ -29,11 +32,11 @@ function construct (Class, isConstructor, args) {
     return new Class(...args)
   } else {
     const prototype = Class.prototype
-    if (prototype instanceof String ||
-      prototype instanceof Number ||
-      prototype instanceof Boolean) {
+    if (prototype instanceof builtIn.String ||
+      prototype instanceof builtIn.Number ||
+      prototype instanceof builtIn.Boolean) {
       return new Class(...args).valueOf()
-    } else if (prototype instanceof Date) {
+    } else if (prototype instanceof builtIn.Date) {
       return new Class(...args).toString()
     } else {
       return new Class(...args)
@@ -53,7 +56,6 @@ function old (Class) {
   assign(WrapperClass, Class)
   WrapperClass.prototype = assign({}, Class.prototype)
   WrapperClass.prototype[_super] = Class
-
   Object.defineProperty(WrapperClass, 'name', { value: Class.name })
 
   defineStatics(WrapperClass, Class)
