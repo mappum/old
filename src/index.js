@@ -30,6 +30,7 @@ function old (Class) {
   assign(WrapperClass, Class)
   WrapperClass.prototype = assign({}, Class.prototype)
   WrapperClass.prototype[_super] = Class
+  Object.defineProperty(WrapperClass, 'name', { value: Class.name })
 
   defineStatics(WrapperClass, Class)
 
