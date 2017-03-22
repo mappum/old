@@ -3,9 +3,7 @@ const assign = require('object-assign')
 
 const _super = Symbol('super')
 
-
 const builtIn = { String, Boolean, Date, Number }
-
 
 function defineStatics(WrapperClass, Class) {
   if (!Class) return;
@@ -26,17 +24,16 @@ function defineStatics(WrapperClass, Class) {
   defineStatics(WrapperClass, Object.getPrototypeOf(Class))
 }
 
-
 function construct (Class, isConstructor, args) {
   if (isConstructor) {
     return new Class(...args)
   } else {
-    const prototype = Class.prototype
-    if (prototype instanceof builtIn.String ||
-      prototype instanceof builtIn.Number ||
-      prototype instanceof builtIn.Boolean) {
+    const prototype = new Class()
+    if (prototype instanceof String ||
+      prototype instanceof Number ||
+      prototype instanceof Boolean) {
       return new Class(...args).valueOf()
-    } else if (prototype instanceof builtIn.Date) {
+    } else if (prototype instanceof Date) {
       return new Class(...args).toString()
     } else {
       return new Class(...args)
